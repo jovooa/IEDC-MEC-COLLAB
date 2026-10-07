@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oila – Baxt Qurg'oni | Interaktiv Loyiha</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                        },
+                        emeraldCustom: {
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles & Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-amber-500 selection:text-white custom-scrollbar">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-amber-500/30">
+                        <i class="fa-solid font-bold fa-heart"></i>
+                    </div>
+                    <span class="font-serif font-bold text-xl sm:text-2xl text-white tracking-wide">Oila<span class="text-amber-400">.Uz</span></span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-200">
+                    <a href="#home" class="hover:text-amber-400 transition-colors">Bosh sahifa</a>
+                    <a href="#values" class="hover:text-amber-400 transition-colors">Qadriyatlar</a>
+                    <a href="#factors" class="hover:text-amber-400 transition-colors">Omillar</a>
+                    <a href="#quotes" class="hover:text-amber-400 transition-colors">Hikmatlar</a>
+                    <a href="#calculator" class="hover:text-amber-400 transition-colors">Interaktiv Test</a>
+                    <a href="#gallery" class="hover:text-amber-400 transition-colors">Galereya</a>
+                    <a href="#articles" class="hover:text-amber-400 transition-colors">Maqolalar</a>
+                    <a href="#wishes" class="hover:text-amber-400 transition-colors">Tilaklar</a>
+                </div>
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-200 hover:text-white text-2xl focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile menu dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-dark px-4 pt-2 pb-6 space-y-3 border-b border-slate-700">
+            <a href="#home" class="block text-slate-200 hover:text-amber-400 py-1">Bosh sahifa</a>
+            <a href="#values" class="block text-slate-200 hover:text-amber-400 py-1">Qadriyatlar</a>
+            <a href="#factors" class="block text-slate-200 hover:text-amber-400 py-1">Omillar</a>
+            <a href="#quotes" class="block text-slate-200 hover:text-amber-400 py-1">Hikmatlar</a>
+            <a href="#calculator" class="block text-slate-200 hover:text-amber-400 py-1">Interaktiv Test</a>
+            <a href="#gallery" class="block text-slate-200 hover:text-amber-400 py-1">Galereya</a>
+            <a href="#articles" class="block text-slate-200 hover:text-amber-400 py-1">Maqolalar</a>
+            <a href="#wishes" class="block text-slate-200 hover:text-amber-400 py-1">Tilaklar</a>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section id="home" class="relative hero-bg min-h-screen flex items-center justify-center pt-20 pb-16 px-4">
+        <div class="max-w-4xl mx-auto text-center text-white space-y-8 z-10">
+            <div class="inline-flex items-center space-x-2 bg-amber-500/20 border border-amber-400/40 backdrop-blur-md px-4 py-2 rounded-full text-amber-300 text-sm font-semibold tracking-wide uppercase animate-pulse">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>Ma'naviy-Ma'rifiy Veb-Loyiha</span>
+            </div>
+            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight">
+                Oila – Baxt Qurg'oni, <br><span class="gold-gradient-text">Jamiyat Tayanchi</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                Tinch va osuda oila – har bir inson uchun eng mustahkam boshpana hamda jamiyat ravnaqining tub poydevoridir. Oilangizda mehr, totuvlik va saodat barqaror bo'lsin.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <a href="#calculator" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-xl shadow-lg shadow-amber-500/25 transition duration-300 transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Oila Baxtini Baholash Testi</span>
+                </a>
+                <a href="#values" class="w-full sm:w-auto px-8 py-4 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-600/50 text-white font-medium rounded-xl backdrop-blur-md transition duration-300 flex items-center justify-center space-x-2">
+                    <span>Loyiha Bilan Tanishish</span>
+                    <i class="fa-solid fa-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Decorative Bottom Curve -->
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-slate-50 to-transparent"></div>
+    </section>
+
+    <!-- 2. OILANING O'RNI VA QADRIYATLAR -->
+    <section id="values" class="py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-sm font-bold text-amber-600 tracking-wider uppercase mb-2">Poydevor</h2>
+            <h3 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Oila Qadriyatlari va Tamoyillari</h3>
+            <p class="text-slate-600">Har bir mustahkam oila qurg'oni ma'naviy va ahloqiy ustunlar ustiga quriladi. Bu ustunlar oilaviy munosabatlarni asrlar davomida asrab kelmoqda.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-heart-circle-check"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">Mehr-Oqibat</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Samimiy mehr va e'tibor oila a'zolari o'rtasidagi munosabatlarni issiq tutadi. Bir-birini tushunish va ardoqlash ruhiy xotirjamlik garovidir.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">O'zaro Hurmat</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Kattalarga izzat, kichiklarga shafqat ko'rsatish, har bir oila a'zosining fikri va shaxsiyatini hurmat qilish ahillikning kalitidir.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">Sog'lom Tarbiya</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Farzandlarga go'zal xulq, bilim va vatanparvarlik tuyg'ularini singdirish oilaning jamiyat oldidagi eng muhim burchidir.
+                </p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-rose-600 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-people-roof"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">Hamjihatlik</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Qiyinchiliklar va quvonchli kunlarda bir yoqadan bosh chiqarib, muammolarni birgalikda hal qilish va bir-biriga yelka tutish.
+                </p>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-purple-600 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">Mas'uliyat</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Oila a'zolarining o'z vazifa va burchlariga mas'uliyat bilan yondashishi tartib, xotirjamlik va barqarorlikni ta'minlaydi.
+                </p>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition duration-300 transform hover:-translate-y-1 group">
+                <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-teal-600 group-hover:text-white transition duration-300">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <h4 class="font-serif text-xl font-bold text-slate-900 mb-3">Ochiq Muloqot</h4>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    Dildan suhbatlashish, bir-birini tinglay bilish va tushunmovchiliklarni bosiqlik bilan hal qilish tinchlik poydevoridir.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. MUSTAHKAMLIK OMILLARI -->
+    <section id="factors" class="py-20 bg-slate-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-amber-400 font-bold tracking-wider text-sm uppercase">Oila ustunlari</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold mt-2 mb-6 leading-tight">Oila Mustahkamligini Ta'minlovchi Asosiy Omillar</h2>
+                    <p class="text-slate-400 mb-8 text-base sm:text-lg leading-relaxed">
+                        Zamonaviy dunyoda oila baxtini saqlab qolish va uni rivojlantirish bir qancha muhim omillarga tayanadi. Bular ruhiy, moddiy hamda muloqot darajasidagi muvozanatdir.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-comments text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">Muloqot Madaniyati va Tushunish</h3>
+                                <p class="text-slate-400 text-sm">Har bir nizo va tushunmovchilikni sokinlik va bosiqlik bilan muzokara qilish ko'nikmasi.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-coins text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">Moliyaviy Barqarorlik va Rejalashtirish</h3>
+                                <p class="text-slate-400 text-sm">Oila byudjetini oqilona boshqarish, isrofgarchilikka yo'l qo'ymaslik va birgalikda rejalashtirish.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-umbrella-beach text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white mb-1">Sifatli Birgalikda Vaqt O'tkazish</h3>
+                                <p class="text-slate-400 text-sm">Oila a'zolari bilan birga hordiq chiqarish, bayramlar va qadriyatlarni birgalikda nishonlash.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
+                        <img src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1200&auto=format&fit=crop" alt="Mustahkam Oila" class="w-full h-auto object-cover transform hover:scale-105 transition duration-700">
+                    </div>
+                    <!-- Overlay Badge -->
+                    <div class="absolute -bottom-6 -left-6 bg-amber-500 text-slate-950 p-6 rounded-2xl shadow-xl hidden sm:block max-w-xs">
+                        <i class="fa-solid fa-quote-left text-2xl mb-2 block opacity-50"></i>
+                        <p class="font-bold text-sm">"Tinch va totuv oilada baraka va baxt doimiy hamrochdir."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SHARQ MUTAFAKKIRLARI HIKMATLARI -->
+    <section id="quotes" class="py-20 px-4 max-w-5xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-amber-600 font-bold tracking-wider text-sm uppercase">Milliy Ma'naviyat</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Buyuk Mutafakkirlar Oila Haida</h2>
+        </div>
+
+        <div class="relative bg-gradient-to-br from-amber-500 to-amber-700 rounded-3xl p-8 sm:p-12 text-slate-950 shadow-xl overflow-hidden">
+            <!-- Background pattern decoration -->
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-serif">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+
+            <div id="quotes-container" class="relative z-10 min-h-[200px] flex flex-col justify-between">
+                <div id="quote-card" class="transition-opacity duration-500">
+                    <i class="fa-solid fa-quote-left text-4xl text-slate-900/40 mb-4 block"></i>
+                    <p id="quote-text" class="font-serif text-xl sm:text-2xl font-semibold leading-relaxed italic mb-6">
+                        "Oila – tarbiya o'chog'i. Farzand xulqi va odobi oiladagi muhitga va ota-onaning ibratiga bog'liqdir."
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-slate-950/20 flex items-center justify-center font-bold font-serif text-lg text-slate-900" id="author-avatar">
+                            AN
+                        </div>
+                        <div>
+                            <h4 id="quote-author" class="font-bold text-lg text-slate-950">Abdulla Avloniy</h4>
+                            <p id="quote-title" class="text-slate-900/80 text-xs font-medium">Ma'rifatparvar adib va pedagog</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-8 border-t border-slate-950/20 mt-6">
+                    <span id="quote-counter" class="text-xs font-bold tracking-widest text-slate-900/70">1 / 4</span>
+                    <div class="flex space-x-3">
+                        <button id="prev-quote" class="w-10 h-10 rounded-full bg-slate-950/20 hover:bg-slate-950/40 text-slate-950 flex items-center justify-center transition">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button id="next-quote" class="w-10 h-10 rounded-full bg-slate-950/20 hover:bg-slate-950/40 text-slate-950 flex items-center justify-center transition">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. INTERAKTIV TEST & CHECKLIST -->
+    <section id="calculator" class="py-20 bg-slate-100 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-600 font-bold tracking-wider text-sm uppercase">Interaktiv Diagnostika</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Oila Baxti Kalkulyatori & Checklist</h2>
+                <p class="text-slate-600 mt-2">Savollarga xolisona javob bering va oilangizdagi baxt va totuvlik darajasini bilib oling.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Checklist / Calculator Questions -->
+                <div class="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
+                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-amber-500"></i>
+                        <span>Oila Baxti Tamoyillari Checklisti</span>
+                    </h3>
+
+                    <form id="quiz-form" class="space-y-4">
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Oila a'zolari bir-birini diqqat bilan tinglaydi va fikrini hurmat qiladi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Kechki ovqat va dam olish kunlarida birgalikda vaqt o'tkaziladi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Moliyaviy xarajatlar va qarorlar birgalikda maslahatlashib qabul qilinadi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Nizo va tushunmovchiliklar baqir-chaqirsiz, bosiqlik bilan hal etiladi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Farzandlar tarbiyasida ota va ona bir xil mas'uliyat va ahillik ko'rsatadi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="15" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Oila a'zolari bir-biriga tez-tez minnatdorchilik va shirin so'zlar aytadi.</span>
+                        </label>
+
+                        <label class="flex items-start space-x-3 p-4 rounded-xl border border-slate-100 bg-slate-50 hover:bg-amber-50/50 cursor-pointer transition">
+                            <input type="checkbox" value="10" class="quiz-check mt-1 w-5 h-5 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-sm font-medium text-slate-700">Kattalarga izzat va kichiklarga shafqat qilish doimiy odat tusiga kirgan.</span>
+                        </label>
+                    </form>
+                </div>
+
+                <!-- Test Result Box -->
+                <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 sm:p-8 rounded-3xl flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Natija Diagnostikasi</span>
+                            <i class="fa-solid fa-chart-pie text-amber-400 text-xl"></i>
+                        </div>
+
+                        <div class="text-center py-6">
+                            <div class="relative inline-flex items-center justify-center">
+                                <svg class="w-36 h-36">
+                                    <circle class="text-slate-700" stroke-width="8" stroke="currentColor" fill="transparent" r="58" cx="72" cy="72"/>
+                                    <circle id="score-circle" class="text-amber-500 transition-all duration-1000 stroke-current" stroke-width="8" stroke-dasharray="365" stroke-dashoffset="365" stroke-linecap="round" fill="transparent" r="58" cx="72" cy="72"/>
+                                </svg>
+                                <span id="score-text" class="absolute text-3xl font-bold font-serif">0%</span>
+                            </div>
+                            <h4 id="score-title" class="text-xl font-bold mt-4 text-amber-300">Belgilarni tanlang</h4>
+                            <p id="score-desc" class="text-slate-300 text-sm mt-2 leading-relaxed">
+                                Yuqoridagi ro'yxatdan oilangizga mos keladigan barcha xususiyatlarni belgilab chiqing.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-700/60 text-center">
+                        <button id="reset-quiz" class="px-6 py-2.5 bg-slate-700 hover:bg-slate-600 text-xs font-bold text-white uppercase tracking-wider rounded-xl transition">
+                            Qaytadan Boshlash
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. FOTO GALEREYA -->
+    <section id="gallery" class="py-20 max-w-7xl mx-auto px-4">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span class="text-amber-600 font-bold tracking-wider text-sm uppercase">Samimiy Lahzalar</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Oila Baxti – Suratlarda</h2>
+            <p class="text-slate-600 mt-2">Iliq va samimiy oilaviy xotiralar jamlangan fotogalereya.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Image 1 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1200&auto=format&fit=crop" data-caption="Birgalikda o'tkazilgan samimiy daqiqalar">
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=600&auto=format&fit=crop" alt="Oila Baxti" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Mehr va Quvonch</p>
+                        <p class="text-amber-300 text-xs">Samimiy kulgu va iliqlik</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=1200&auto=format&fit=crop" data-caption="Farzandlar bilan sayr va quvonch">
+                <img src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?q=80&w=600&auto=format&fit=crop" alt="Farzandlar va Ota-ona" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Farzandlar Shodligi</p>
+                        <p class="text-amber-300 text-xs">Tabiat bag'ridagi hordiq</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image 3 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1609234656388-0ff363383899?q=80&w=1200&auto=format&fit=crop" data-caption="Katta avlod va nabiralar o'rtasidagi mehr">
+                <img src="https://images.unsplash.com/photo-1609234656388-0ff363383899?q=80&w=600&auto=format&fit=crop" alt="Bobo va Nabira" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Avlodlar Bog'liqligi</p>
+                        <p class="text-amber-300 text-xs">Kattalarga izzat-hurmat</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image 4 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?q=80&w=1200&auto=format&fit=crop" data-caption="Quyoshli kunda oilaviy sayr">
+                <img src="https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?q=80&w=600&auto=format&fit=crop" alt="Oilaviy Sayr" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Birgalikdagi Sayohat</p>
+                        <p class="text-amber-300 text-xs">Yangi taassurotlar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image 5 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1581952976147-5a2d15560349?q=80&w=1200&auto=format&fit=crop" data-caption="Oila davrasida kechki dasturxon">
+                <img src="https://images.unsplash.com/photo-1581952976147-5a2d15560349?q=80&w=600&auto=format&fit=crop" alt="Dasturxon" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Dasturxon Atrofida</p>
+                        <p class="text-amber-300 text-xs">Shirin suhbat va baraka</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image 6 -->
+            <div class="group relative rounded-2xl overflow-hidden shadow-md cursor-pointer gallery-item" data-img="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop" data-caption="Farzand tarbiyasi va ta'lim">
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600&auto=format&fit=crop" alt="Tarbiya" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                    <div>
+                        <p class="text-white font-serif font-bold text-lg">Zukko Avlod Tarbiyasi</p>
+                        <p class="text-amber-300 text-xs">Kelajakka poydevor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white text-3xl hover:text-amber-400 transition">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-4xl w-full text-center">
+            <img id="lightbox-img" src="" alt="Zoom" class="max-h-[80vh] mx-auto rounded-2xl shadow-2xl">
+            <p id="lightbox-caption" class="text-white font-serif text-lg mt-4 font-medium"></p>
+        </div>
+    </div>
+
+    <!-- 7. MAQOLALAR VA MASLAHATLAR (Accordion) -->
+    <section id="articles" class="py-20 bg-slate-50 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-600 font-bold tracking-wider text-sm uppercase">Foydali Yo'riqnoma</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Psixologik Maslahatlar va Maqolalar</h2>
+                <p class="text-slate-600 mt-2">Oila hayotida uchraydigan dolzarb masalalarga ilmiy va tajribaviy yechimlar.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Accordion 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left flex items-center justify-between font-serif font-bold text-lg text-slate-900 hover:bg-slate-50 transition">
+                        <span class="flex items-center space-x-3">
+                            <i class="fa-solid fa-child text-amber-500"></i>
+                            <span>Farzand tarbiyasida ota va onaning o'rni hamda vazifalari</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 py-5 bg-slate-50/50 border-t border-slate-100 text-slate-600 text-sm leading-relaxed space-y-3">
+                        <p>
+                            Farzand tarbiyasi – sabr va mas'uliyat talab qiladigan doimiy jarayondir. Bola asosan so'zlardan emas, balki ota-onasining xatti-harakatlaridan, o'zaro muomalasidan va atrof-muhitdan o'rnak oladi.
+                        </p>
+                        <ul class="list-disc list-inside space-y-1 font-medium text-slate-700">
+                            <li>Bolaga o'z fikrini erkin bayon qilishiga imkon bering.</li>
+                            <li>Xatolar uchun jazolashdan ko'ra, ulardan saboq chiqarishni o'rgating.</li>
+                            <li>Ota va onaning tarbiya borasidagi talablari bir xil bo'lishi lozim.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Accordion 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left flex items-center justify-between font-serif font-bold text-lg text-slate-900 hover:bg-slate-50 transition">
+                        <span class="flex items-center space-x-3">
+                            <i class="fa-solid fa-comments-dollar text-emerald-500"></i>
+                            <span>Oila byudjetini rejalashtirish va moliyaviy tinchlik</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 py-5 bg-slate-50/50 border-t border-slate-100 text-slate-600 text-sm leading-relaxed space-y-3">
+                        <p>
+                            Moliyaviy muammolar ko'pincha oilaviy kelishmovchiliklarga sabab bo'ladi. Shu sababli oylik daromad va xarajatlarni to'g'ri taqsimlash, kutilmagan vaziyatlar uchun ehtiyot jamg'armasini shakllantirish juda muhimdir.
+                        </p>
+                        <p>
+                            Isrofgarchilikning oldini olish hamda zaruriy ehtiyojlarni birinchi o'ringa qo'yish orqali oilaning moliyaviy barqarorligi ta'minlanadi.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Accordion 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button class="accordion-header w-full px-6 py-5 text-left flex items-center justify-between font-serif font-bold text-lg text-slate-900 hover:bg-slate-50 transition">
+                        <span class="flex items-center space-x-3">
+                            <i class="fa-solid fa-hand-holding-heart text-rose-500"></i>
+                            <span>Nizolarni tinch va oqilona hal etish yo'llari</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content hidden px-6 py-5 bg-slate-50/50 border-t border-slate-100 text-slate-600 text-sm leading-relaxed space-y-3">
+                        <p>
+                            Har bir oilada kelishmovchiliklar bo'lishi tabiiy. Asosiysi – jahl chiqqanda sukunatni saqlash, ayblash o'rniga o'z his-tuyg'ularingizni muloyimlik bilan tushuntirishdir.
+                        </p>
+                        <p>
+                            "Siz doim shundaysiz" deyish o'rniga "Men bu vaziyatda o'zimni noqulay his qilyapman" deyish muloqotni ijobiy tomonga buradi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. TILAKLAR DEVORI & XULOSA -->
+    <section id="wishes" class="py-20 bg-slate-900 text-white px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-400 font-bold tracking-wider text-sm uppercase">Dil So'zlari</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2">Oila Baxti Uchun Tilaklar Devori</h2>
+                <p class="text-slate-400 mt-2">O'z samimiy dilek va tilaklaringizni qoldiring va boshqalarning tilaklaridan bahramand bo'ling.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Form to Add Wish -->
+                <div class="lg:col-span-5 bg-slate-800 p-6 sm:p-8 rounded-3xl border border-slate-700">
+                    <h3 class="font-serif text-xl font-bold text-amber-400 mb-6 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        <span>Tilak Qoldirish</span>
+                    </h3>
+                    <form id="wish-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Ismingiz</label>
+                            <input type="text" id="wish-name" placeholder="Masalan: Jasurbek" required class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-amber-500 transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Manzil / Shahrigiz</label>
+                            <input type="text" id="wish-city" placeholder="Masalan: Toshkent" required class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-amber-500 transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Samimiy Tilagingiz</label>
+                            <textarea id="wish-message" rows="4" placeholder="Oila baxti va totuvligi haqida samimiy so'zlaringiz..." required class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:outline-none focus:border-amber-500 transition text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-xl shadow-lg transition duration-300">
+                            Tilakni Devorga Joylash
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Wishes Feed -->
+                <div class="lg:col-span-7">
+                    <div id="wishes-feed" class="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Default Wish 1 -->
+                        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 backdrop-blur-sm">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">
+                                        AN
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-white">Anvar va Malika</h4>
+                                        <p class="text-xs text-slate-400">Samarqand</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-amber-400/80"><i class="fa-solid fa-heart mr-1"></i> Samimiy</span>
+                            </div>
+                            <p class="text-slate-300 text-sm italic leading-relaxed">
+                                "Yurtimizdagi har bir xonadonda tinchlik, kulgu va to'kin-sochinlik barqaror bo'lsin. Ota-onalarimiz baxtimizga sog'-omad bo'lishsin!"
+                            </p>
+                        </div>
+
+                        <!-- Default Wish 2 -->
+                        <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700/60 backdrop-blur-sm">
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                                        SZ
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-white">Shahnoza Ziyodova</h4>
+                                        <p class="text-xs text-slate-400">Toshkent</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs text-amber-400/80"><i class="fa-solid fa-heart mr-1"></i> Samimiy</span>
+                            </div>
+                            <p class="text-slate-300 text-sm italic leading-relaxed">
+                                "Oila – bu dunyodagi eng aziz va muqaddas maskan. Har bir yosh oilaga sabr, totuvlik va mustahkam muhabbat tilayman."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
+            <div class="flex items-center justify-center space-x-2">
+                <div class="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-slate-950 font-bold">
+                    <i class="fa-solid fa-heart text-sm"></i>
+                </div>
+                <span class="font-serif font-bold text-xl text-white">Oila<span class="text-amber-400">.Uz</span></span>
+            </div>
+            <p class="text-sm max-w-md mx-auto text-slate-500">
+                "Oila – baxt qurg'oni" ma'naviy-ma'rifiy va interaktiv loyihasi. Milliy va umuminsoniy qadriyatlar targ'iboti.
+            </p>
+            <p class="text-xs text-slate-600 pt-4">
+                &copy; 2026 Barcha huquqlar himoyalangan. Maktab va kollej loyihalari uchun maxsus tayyorlandi.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on click link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navbar Scroll Styling
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-dark', 'shadow-lg');
+            } else {
+                navbar.classList.remove('glass-dark', 'shadow-lg');
+            }
+        });
+
+        // 2. Quotes Carousel Data & Logic
+        const quotesData = [
+            {
+                quote: "Oila – tarbiya o'chog'i. Farzand xulqi va odobi oiladagi muhitga va ota-onaning ibratiga bog'liqdir.",
+                author: "Abdulla Avloniy",
+                title: "Ma'rifatparvar adib va pedagog",
+                avatar: "AA"
+            },
+            {
+                quote: "Olamning baxti va obodligi oilalarning ahilligi va tinchligidan boshlanadi. Tinch oila – tinch jamiyatdir.",
+                author: "Alisher Navoiy",
+                title: "Buyuk shoir va mutafakkir",
+                avatar: "AN"
+            },
+            {
+                quote: "Tana va ruhiyatning salomatligi oilaviy munosabatlardagi xotirjamlik va samimiyat bilan chambarchas bog'liqdir.",
+                author: "Abu Ali ibn Sino",
+                title: "Buyuk tabib va alloma",
+                avatar: "IS"
+            },
+            {
+                quote: "Ota-onasiga izzat va hurmat ko'rsatgan insonning o'z farzandlaridan ko'radigan quvonchi va oqibati ziyoda bo'lur.",
+                author: "Sa'diy Sheroziy",
+                title: "Sharq shoiri va mutafakkiri",
+                avatar: "SS"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+        const quoteText = document.getElementById('quote-text');
+        const quoteAuthor = document.getElementById('quote-author');
+        const quoteTitle = document.getElementById('quote-title');
+        const authorAvatar = document.getElementById('author-avatar');
+        const quoteCounter = document.getElementById('quote-counter');
+        const quoteCard = document.getElementById('quote-card');
+
+        function updateQuote(index) {
+            quoteCard.style.opacity = 0;
+            setTimeout(() => {
+                const data = quotesData[index];
+                quoteText.textContent = `"${data.quote}"`;
+                quoteAuthor.textContent = data.author;
+                quoteTitle.textContent = data.title;
+                authorAvatar.textContent = data.avatar;
+                quoteCounter.textContent = `${index + 1} / ${quotesData.length}`;
+                quoteCard.style.opacity = 1;
+            }, 250);
+        }
+
+        document.getElementById('next-quote').addEventListener('click', () => {
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotesData.length;
+            updateQuote(currentQuoteIndex);
+        });
+
+        document.getElementById('prev-quote').addEventListener('click', () => {
+            currentQuoteIndex = (currentQuoteIndex - 1 + quotesData.length) % quotesData.length;
+            updateQuote(currentQuoteIndex);
+        });
+
+        // 3. Quiz / Calculator Logic
+        const quizChecks = document.querySelectorAll('.quiz-check');
+        const scoreText = document.getElementById('score-text');
+        const scoreCircle = document.getElementById('score-circle');
+        const scoreTitle = document.getElementById('score-title');
+        const scoreDesc = document.getElementById('score-desc');
+        const resetQuizBtn = document.getElementById('reset-quiz');
+
+        function calculateScore() {
+            let total = 0;
+            quizChecks.forEach(check => {
+                if (check.checked) {
+                    total += parseInt(check.value);
+                }
+            });
+
+            if (total > 100) total = 100;
+
+            // Update percentage circle
+            const circumference = 365;
+            const offset = circumference - (total / 100) * circumference;
+            scoreCircle.style.strokeDashoffset = offset;
+            scoreText.textContent = `${total}%`;
+
+            // Dynamic Description
+            if (total === 0) {
+                scoreTitle.textContent = "Belgilarni tanlang";
+                scoreDesc.textContent = "Yuqoridagi ro'yxatdan oilangizga mos keladigan barcha xususiyatlarni belgilab chiqing.";
+            } else if (total < 40) {
+                scoreTitle.textContent = "Rivojlantirish Zarur";
+                scoreDesc.textContent = "Oilada muloqot va hamjihatlikni oshirish, bir-biriga ko'proq vaqt ajratish tavsiya etiladi.";
+            } else if (total < 80) {
+                scoreTitle.textContent = "Yaxshi va Mustahkam";
+                scoreDesc.textContent = "Oilangizda sog'lom muhit mavjud. Kichik tushunmovchiliklarni bosiqlik bilan hal etishda davom eting.";
+            } else {
+                scoreTitle.textContent = "A'lo Darajadagi Baxt Qurg'oni!";
+                scoreDesc.textContent = "Masha'Allah! Oilangizda mehr-oqibat, samimiyat va yuqori darajadagi muloqot barqaror. Bu havas qilsa arziydigan oiladir.";
+            }
+        }
+
+        quizChecks.forEach(check => {
+            check.addEventListener('change', calculateScore);
+        });
+
+        resetQuizBtn.addEventListener('click', () => {
+            quizChecks.forEach(check => check.checked = false);
+            calculateScore();
+        });
+
+        // 4. Lightbox Gallery Logic
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+        const closeLightbox = document.getElementById('close-lightbox');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.getAttribute('data-img');
+                const caption = item.getAttribute('data-caption');
+                lightboxImg.src = imgSrc;
+                lightboxCaption.textContent = caption;
+                lightbox.classList.remove('hidden');
+            });
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.add('hidden');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.add('hidden');
+            }
+        });
+
+        // 5. Accordion Articles Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.fa-chevron-down');
+
+                // Toggle visibility
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    content.classList.add('hidden');
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // 6. Wish Form Logic
+        const wishForm = document.getElementById('wish-form');
+        const wishesFeed = document.getElementById('wishes-feed');
+
+        wishForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('wish-name').value.trim();
+            const city = document.getElementById('wish-city').value.trim();
+            const message = document.getElementById('wish-message').value.trim();
+
+            if (!name || !city || !message) return;
+
+            // Generate initials
+            const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || 'UZ';
+
+            // Create new wish element
+            const wishCard = document.createElement('div');
+            wishCard.className = "bg-slate-800/80 p-6 rounded-2xl border border-amber-500/40 backdrop-blur-sm animate-pulse";
+            wishCard.innerHTML = `
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-sm">
+                            ${initials}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">${name}</h4>
+                            <p class="text-xs text-slate-400">${city}</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-amber-400 font-bold"><i class="fa-solid fa-sparkles mr-1"></i> Yangi</span>
+                </div>
+                <p class="text-slate-200 text-sm italic leading-relaxed">
+                    "${message}"
+                </p>
+            `;
+
+            // Insert at the top of the feed
+            wishesFeed.prepend(wishCard);
+
+            setTimeout(() => {
+                wishCard.classList.remove('animate-pulse');
+            }, 1000);
+
+            // Reset form
+            wishForm.reset();
+        });
+    </script>
+</body>
+</html>
